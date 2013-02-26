@@ -1,0 +1,40 @@
+﻿clear-map
+
+// restore the default for rendering the coasline & seas
+set-setting name=map.coastline.mode value=loose
+
+use-ruleset location="Israel_Hiking\Israel Hiking.mrules"
+
+load-source Israel_Hiking\israel_and_palestine.osm.pbf
+
+geo-bounds-use-source
+//-// Bounds were locked to source OSM file ('...\israel_and_palestine.osm.pbf'): 34.00842,29.32535,35.92745,33.398339999
+
+//-// Alternatively, download from the overpass server
+// set-geo-bounds 34.00842,29.32535,35.92745,33.398339999
+// download-osm-overpass query="(node($b$);rel(bn)->.x;way($b$);node(w)->.x;rel(bw););out;"
+
+set-print-bounds-geo
+
+//-//Add way lengths to the first OSM data source
+run-python file="Israel_Hiking\AddWayLengthTags.py"
+
+//-// re-apply the rules to consider the added lengths
+apply-ruleset
+
+//-// Alternatively, the contoures can be created using:
+// generate-contours interval=10
+// save-source file=Israel_Hiking\Israel.contours index=2
+load-source Israel_Hiking\Israel.contours
+
+//-// Alternatively, the relief can be created using:
+// generate-relief-igor
+//-// copy and rename the resulting .png and .georef files from the Temp directory to Israel_Hiking
+load-image file=Israel_Hiking\relief_Hiking_Igor.png background=true
+
+//-// Alternatively, the relief can be created using:
+// generate-relief-slopeshading
+//-// copy and rename the resulting .png and .georef files from the Temp directory to Israel_Hiking
+load-image file=Israel_Hiking\relief_Hiking_Slopeshading.png background=true
+
+generate-tiles minzoom=7 maxzoom=15 tilesdir=Israel_Hiking\Tiles
