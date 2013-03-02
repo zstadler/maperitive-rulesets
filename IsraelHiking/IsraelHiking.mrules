@@ -9,6 +9,7 @@
 
 // History:
 // --------
+// 2013-03-02: Added Grid Lines
 // 2013-02-24: Uploaded to GitHub
 // 2013-02-17: Updated by Harel Mazor and Zeev Stadler
 //		- Modify to ITC Style
@@ -85,6 +86,7 @@ features
 		boundary country : boundary=administrative AND admin_level=2 AND NOT natural=coastline
 //		boundary province : boundary=administrative AND (admin_level=4 OR admin_level=6)
 //		boundary municipal : boundary=administrative AND admin_level=8
+		grid : gpxtrack=grid
 
 	areas
 		building : building=yes
@@ -723,6 +725,14 @@ rules
 				min-zoom : 13
 				line-width : 0.65
 		draw : contour
+
+	target: grid
+		define
+			line-color : black
+			curved : true
+			min-zoom : 12
+			line-width : 1
+		draw : line
 
 // areas
 
