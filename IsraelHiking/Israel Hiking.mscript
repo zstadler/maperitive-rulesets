@@ -3,11 +3,11 @@
 // restore the default for rendering the coasline & seas
 set-setting name=map.coastline.mode value=loose
 
-use-ruleset location="Israel_Hiking\Israel Hiking.mrules"
+use-ruleset location="IsraelHiking\Israel Hiking.mrules"
 
 // Downloaded GeoFabric's OSM snapshot from
 // http://download.geofabrik.de/openstreetmap/asia/israel_and_palestine.osm.pbf
-load-source Israel_Hiking\israel_and_palestine.osm.pbf
+load-source IsraelHiking\israel_and_palestine.osm.pbf
 
 geo-bounds-use-source
 //-// Bounds were locked to source OSM file ('...\israel_and_palestine.osm.pbf'): 34.00842,29.32535,35.92745,33.398339999
@@ -19,23 +19,27 @@ geo-bounds-use-source
 set-print-bounds-geo
 
 //-//Add way lengths to the first OSM data source
-run-python file="Israel_Hiking\AddWayLengthTags.py"
+run-python file="IsraelHiking\AddWayLengthTags.py"
+
+//-//Adding (1Km x 1Km) Grid lines
+//run-python file="IsraelHiking\CreateGridOsm.py"
+load-source IsraelHiking\grid.osm
 
 //-// re-apply the rules to consider the added lengths
 apply-ruleset
 
 // Load the contour file created using "Israel Hiking Setup.mscript"
-load-source Israel_Hiking\Israel.contours
+load-source IsraelHiking\Israel.contours
 //-// Alternatively, the contoures can be created using:
 // generate-contours interval=10
 
 // Load the relief file created using "Israel Hiking Setup.mscript"
-load-image file=Israel_Hiking\relief_Hiking_Igor.png background=true
+load-image file=IsraelHiking\relief_Hiking_Igor.png background=true
 //-// Alternatively, the relief can be created using:
 // generate-relief-igor
 
 // Load the relief file created using "Israel Hiking Setup.mscript"
-load-image file=Israel_Hiking\relief_Hiking_Slopeshading.png background=true
+load-image file=IsraelHiking\relief_Hiking_Slopeshading.png background=true
 //-// Alternatively, the relief can be created using:
 // generate-relief-slopeshading
 
