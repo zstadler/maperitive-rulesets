@@ -3,7 +3,7 @@
 // restore the default for rendering the coasline & seas
 set-setting name=map.coastline.mode value=loose
 
-use-ruleset location="IsraelHiking\Israel Hiking.mrules"
+use-ruleset location="IsraelHiking\IsraelHiking.mrules"
 
 // Downloaded GeoFabric's OSM snapshot from
 // http://download.geofabrik.de/openstreetmap/asia/israel_and_palestine.osm.pbf
@@ -43,4 +43,4 @@ load-image file=IsraelHiking\relief_Hiking_Slopeshading.png background=true
 //-// Alternatively, the relief can be created using:
 // generate-relief-slopeshading
 
-generate-tiles minzoom=7 maxzoom=15 tilesdir=Israel_Hiking\Tiles
+generate-tiles minzoom=7 maxzoom=15 tilesdir=IsraelHiking\Tiles
