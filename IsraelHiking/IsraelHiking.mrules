@@ -729,7 +729,7 @@ rules
 
 	target: grid
 		define
-			line-width : 11:0.5;12:1.5
+			line-width : 11:0.5;12:2
 		for : @isMulti(name, 20)
 			define
 				min-zoom : 8

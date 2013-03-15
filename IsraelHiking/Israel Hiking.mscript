@@ -6,11 +6,11 @@ set-setting name=map.coastline.mode value=loose
 use-ruleset location="IsraelHiking\IsraelHiking.mrules"
 
 // Downloaded GeoFabric's OSM snapshot from
-// http://download.geofabrik.de/openstreetmap/asia/israel_and_palestine.osm.pbf
-load-source IsraelHiking\israel_and_palestine.osm.pbf
+// http://download.geofabrik.de/asia/israel-and-palestine-latest.osm.pbf
+load-source IsraelHiking\israel-and-palestine-latest.osm.pbf
 
 geo-bounds-use-source
-//-// Bounds were locked to source OSM file ('...\israel_and_palestine.osm.pbf'): 34.00842,29.32535,35.92745,33.398339999
+//-// Bounds were locked to source OSM file ('...\IsraelHiking\israel-and-palestine-latest.osm.pbf'): 34.00842,29.32535,35.92745,33.398339999
 
 //-// Alternatively, download from the overpass server
 // set-geo-bounds 34.00842,29.32535,35.92745,33.398339999
@@ -22,8 +22,8 @@ set-print-bounds-geo
 run-python file="IsraelHiking\AddWayLengthTags.py"
 
 //-//Adding (1Km x 1Km) Grid lines
-//run-python file="IsraelHiking\CreateGridOsm.py"
-load-source IsraelHiking\grid.osm
+//run-python file="IsraelHiking\CreateITMGridOsm.py"
+load-source IsraelHiking\ITMGrid.osm
 
 //-// re-apply the rules to consider the added lengths
 apply-ruleset
