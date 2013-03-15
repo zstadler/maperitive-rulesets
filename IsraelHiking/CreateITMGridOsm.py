@@ -13,8 +13,9 @@ import math
 # Defines
 #=================================================
 # Grid creation boundries - in meters
-iGridStartN = 350000
-iGridEndN = 810000
+# TODO: calculate the grid boundaries from Maperitive geo boundaries
+iGridStartN = 340000
+iGridEndN = 820000
 iGridStartE = 100000
 iGridEndE = 300000
 iGridStep = 1000
@@ -22,34 +23,34 @@ iGridStep = 1000
 sFileName = 'IsraelHiking\ITMGrid.osm'
 
 # WGS84 Data
-WGS84_a = 6378137.0					# Equatorial earth radius
-WGS84_b = 6356752.3142				# Polar earth radius
-WGS84_f = 0.00335281066474748	  	# (a-b)/a Flatenning = 1/298.257223563
-WGS84_esq = 0.006694380004260807	# esq = 1-(b*b)/(a*a) Eccentricity Squared
-WGS84_e = 0.0818191909289062 		# sqrt(esq) Eccentricity
+WGS84_a = 6378137.0                     # Equatorial earth radius
+WGS84_b = 6356752.3142                  # Polar earth radius
+WGS84_f = 0.00335281066474748           # (a-b)/a Flatenning = 1/298.257223563
+WGS84_esq = 0.006694380004260807        # esq = 1-(b*b)/(a*a) Eccentricity Squared
+WGS84_e = 0.0818191909289062            # sqrt(esq) Eccentricity
 # GRS80 Data
-GRS80_a = 6378137.0					# Equatorial earth radius
-GRS80_b = 6356752.3141				# Polar earth radius
-GRS80_f = 0.0033528106811823		# (a-b)/a Flatenning = 1/298.257222101
-GRS80_esq = 0.00669438002290272		# esq = 1-(b*b)/(a*a) Eccentricity Squared
-GRS80_e = 0.0818191910428276		# sqrt(esq) Eccentricity
+GRS80_a = 6378137.0                     # Equatorial earth radius
+GRS80_b = 6356752.3141                  # Polar earth radius
+GRS80_f = 0.0033528106811823            # (a-b)/a Flatenning = 1/298.257222101
+GRS80_esq = 0.00669438002290272         # esq = 1-(b*b)/(a*a) Eccentricity Squared
+GRS80_e = 0.0818191910428276            # sqrt(esq) Eccentricity
 # deltas to WGS84
 GRS80_dX = -48
 GRS80_dY = 55
 GRS80_dZ = 52
 
 #ITM Grid data
-Grid_lon0 = 0.61443473225468920			# lon0 = central meridian in radians 35.12'16.261"
-Grid_lat0 = 0.55386965463774187			# lat0 = central latitude in radians 31.44'03.817"
-Grid_k0 = 1.0000067						# k0 = scale factor
-Grid_false_easting = 219529.584			 
-Grid_false_northing = 2885516.9488		# = 3512424.3388-626907.390
-										# MAPI says the false northing is 626907.390, and in another place
-										# that the meridional arc at the central latitude is 3512424.3388
+Grid_lon0 = 0.61443473225468920         # lon0 = central meridian in radians 35.12'16.261"
+Grid_lat0 = 0.55386965463774187         # lat0 = central latitude in radians 31.44'03.817"
+Grid_k0 = 1.0000067                     # k0 = scale factor
+Grid_false_easting = 219529.584                  
+Grid_false_northing = 2885516.9488      # = 3512424.3388-626907.390
+                                        # MAPI says the false northing is 626907.390, and in another place
+                                        # that the meridional arc at the central latitude is 3512424.3388
 
 #=================================================
 # Defines End
-#=================================================										
+#=================================================
 
 
 #=================================================
@@ -148,10 +149,10 @@ def MolodenskyGRS80ToWGS84(ilat, ilon) :
 #======================================================
 # Main script - creates osm file with ITM grid data
 # this part will create a matrix of nodes according to
-# 	the given step, start and end point in ITM coordinates.
-#	once this matrix of nodes is written to the file we will add
-# 	ways between every line in this matrix
-#======================================================	
+#       the given step, start and end point in ITM coordinates.
+#       once this matrix of nodes is written to the file we will add
+#       ways between every line in this matrix
+#====================================================== 
 
 osmFile = open(sFileName, 'w')
 iId = 0
@@ -160,34 +161,32 @@ osmFile.write('<?xml version="1.0" encoding="utf-8"?>' + "\n")
 osmFile.write('<osm version="0.5" generator="CreateITMGridOsm.py">' + "\n")
 
 # Adding all the junction nodes
-for iN in range(iGridStartN, iGridEndN, iGridStep) :
-	for iE in range(iGridStartE, iGridEndE, iGridStep) :
+for iN in range(iGridStartN, iGridEndN + iGridStep, iGridStep) :
+	for iE in range(iGridStartE, iGridEndE + iGridStep, iGridStep) :
 		(dbLat,dbLon) = ITM2WGS84(iN, iE)
 		osmFile.write('  <node id="' + str(iId) + '" visible="true" lat="' + str(dbLat) + '" lon="' + str(dbLon) + '" />' + "\n")
 		iId = iId + 1
-		
+
 # Adding horizontal lines
-for iN in range(iGridStartN, iGridEndN, iGridStep) :
+for iN in range(iGridStartN, iGridEndN + iGridStep, iGridStep) :
 	osmFile.write('  <way id="' + str(iId) + '" visible="true">' + "\n")
 	iId = iId + 1
-	for iE in range(iGridStartE, iGridEndE, iGridStep) :
-		iNodeId = ((iE - iGridStartE) + (iN - iGridStartN) * (iGridEndE - iGridStartE)/ iGridStep) / iGridStep
+	for iE in range(iGridStartE, iGridEndE + iGridStep, iGridStep) :
+		iNodeId = ((iE - iGridStartE) + (iN - iGridStartN) * (1 + (iGridEndE - iGridStartE)/ iGridStep)) / iGridStep
 		osmFile.write('    <nd ref="' + str(iNodeId) + '" />' + "\n")
-	osmFile.write('    <tag k="gpxtrack" v="grid"/>' + "\n")
-	if ((iN / 1000)% 5 == 0) :
-		osmFile.write('    <tag k="ITM" v="' +  str(iN / 1000) + '"/>' + "\n")
+	osmFile.write('    <tag k="grid" v="ITM"/>' + "\n")
+	osmFile.write('    <tag k="name" v="' +  str(iN / 1000) + '"/>' + "\n")
 	osmFile.write('  </way>' + "\n")
 	
 # Adding vertical lines
-for iE in range(iGridStartE, iGridEndE, iGridStep) :
+for iE in range(iGridStartE, iGridEndE + iGridStep, iGridStep) :
 	osmFile.write('  <way id="' + str(iId) + '" visible="true">' + "\n")
 	iId = iId + 1
-	for iN in range(iGridStartN, iGridEndN, iGridStep) :
-		iNodeId = ((iE - iGridStartE) + (iN - iGridStartN) * (iGridEndE - iGridStartE)/ iGridStep) / iGridStep
+	for iN in range(iGridStartN, iGridEndN + iGridStep, iGridStep) :
+		iNodeId = ((iE - iGridStartE) + (iN - iGridStartN) * (1 + (iGridEndE - iGridStartE)/ iGridStep)) / iGridStep
 		osmFile.write('    <nd ref="' + str(iNodeId) + '" />' + "\n")
-	osmFile.write('    <tag k="gpxtrack" v="grid"/>' + "\n")
-	if ((iE / 1000)% 5 == 0) :
-		osmFile.write('    <tag k="ITM" v="' +  str(iE / 1000) + '"/>' + "\n")
+	osmFile.write('    <tag k="grid" v="ITM"/>' + "\n")
+	osmFile.write('    <tag k="name" v="' +  str(iE / 1000) + '"/>' + "\n")
 	osmFile.write('  </way>' + "\n")
 
 # writing osm fotter
