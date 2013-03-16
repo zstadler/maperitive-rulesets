@@ -34,7 +34,7 @@ MOBAC and Oruxmaps
 	this should result in adding the name to the tree, opening the tree should show the selected zoom levels
 9. Click "Create Atlas"
 10. A window should pop up with progress, make sure to check "ignore download errors", the operation should take about 3 hours (I think, I always run it overnight).
-11. Once finished you should be able to find a folder under <MOBAC installation folder>\atlases\Israel Hiking_<creation date>\ called "Israel Hiking" 
+11. Once finished you should be able to find a folder under <MOBAC installation folder>\atlases\Israel Hiking_< Creation Date >\ called "Israel Hiking" 
 12. Copy the "Israel Hiking" folder (not the one with the date) to you android device under /sdcard/oruxmaps/mapfiles
 13. Enjoy, open a OSM account and add trails to make this map better :)
 
