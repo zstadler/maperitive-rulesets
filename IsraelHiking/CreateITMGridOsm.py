@@ -164,7 +164,11 @@ osmFile.write('<osm version="0.5" generator="CreateITMGridOsm.py">' + "\n")
 for iN in range(iGridStartN, iGridEndN + iGridStep, iGridStep) :
 	for iE in range(iGridStartE, iGridEndE + iGridStep, iGridStep) :
 		(dbLat,dbLon) = ITM2WGS84(iN, iE)
-		osmFile.write('  <node id="' + str(iId) + '" visible="true" lat="' + str(dbLat) + '" lon="' + str(dbLon) + '" />' + "\n")
+		osmFile.write('  <node id="' + str(iId) + '" visible="true" lat="' + str(dbLat) + '" lon="' + str(dbLon) + '">' + "\n")
+		osmFile.write('    <tag k="grid" v="ITM"/>' + "\n")
+		osmFile.write('    <tag k="east" v="' +  str(iE / 1000) + '"/>' + "\n")
+		osmFile.write('    <tag k="north" v="' +  str(iN / 1000) + '"/>' + "\n")
+		osmFile.write('  </node>' + "\n")
 		iId = iId + 1
 
 # Adding horizontal lines
@@ -173,7 +177,7 @@ for iN in range(iGridStartN, iGridEndN + iGridStep, iGridStep) :
 	iId = iId + 1
 	for iE in range(iGridStartE, iGridEndE + iGridStep, iGridStep) :
 		iNodeId = ((iE - iGridStartE) + (iN - iGridStartN) * (1 + (iGridEndE - iGridStartE)/ iGridStep)) / iGridStep
-		osmFile.write('    <nd ref="' + str(iNodeId) + '" />' + "\n")
+		osmFile.write('    <nd ref="' + str(iNodeId) + '"/>' + "\n")
 	osmFile.write('    <tag k="grid" v="ITM"/>' + "\n")
 	osmFile.write('    <tag k="name" v="' +  str(iN / 1000) + '"/>' + "\n")
 	osmFile.write('  </way>' + "\n")
@@ -184,7 +188,7 @@ for iE in range(iGridStartE, iGridEndE + iGridStep, iGridStep) :
 	iId = iId + 1
 	for iN in range(iGridStartN, iGridEndN + iGridStep, iGridStep) :
 		iNodeId = ((iE - iGridStartE) + (iN - iGridStartN) * (1 + (iGridEndE - iGridStartE)/ iGridStep)) / iGridStep
-		osmFile.write('    <nd ref="' + str(iNodeId) + '" />' + "\n")
+		osmFile.write('    <nd ref="' + str(iNodeId) + '"/>' + "\n")
 	osmFile.write('    <tag k="grid" v="ITM"/>' + "\n")
 	osmFile.write('    <tag k="name" v="' +  str(iE / 1000) + '"/>' + "\n")
 	osmFile.write('  </way>' + "\n")

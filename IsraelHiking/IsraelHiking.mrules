@@ -54,6 +54,8 @@ features
 		water spring : natural=spring
 		water well : man_made=water_well
 		water cistern : man_made=cistern
+		grid label north : grid AND @isMulti(east,10) AND @isMulti(north,2)
+		grid label east : grid AND @isMulti(north,10) AND @isMulti(east,2)
 
 	lines
 //		aerialway : aerialway
@@ -727,7 +729,24 @@ rules
 				line-width : 0.65
 		draw : contour
 
-	target: grid
+	target : grid label *
+		if : grid label north
+			define
+				text : north
+				text-align-horizontal : near
+				text-offset-horizontal : 120%
+		elseif : grid label east
+			define
+				text : east
+				text-align-vertical : far
+				text-offset-vertical : -120%
+		define
+			font-size : 14
+			min-zoom : 13
+			text-opacity : 80%
+		draw : text
+
+	target : grid
 		define
 			line-width : 11:0.5;12:2
 		for : @isMulti(name, 20)
@@ -743,6 +762,7 @@ rules
 		define
 			line-color : black
 			curved : true
+			line-opacity : 80%
 		draw : line
 
 // areas
