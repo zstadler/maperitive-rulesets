@@ -85,7 +85,7 @@ features
 		track minor : highway=track AND  (@isOneOf(tracktype, grade3, grade4, grade5) OR NOT tracktype) 
 		railway rail : railway=rail
 		power line : @isOneOf(power, line, minor_line)
-		stream : waterway=stream
+		stream : @isOneOf(waterway, stream, river)
 		boundary country : boundary=administrative AND admin_level=2 AND NOT natural=coastline
 //		boundary province : boundary=administrative AND (admin_level=4 OR admin_level=6)
 //		boundary municipal : boundary=administrative AND admin_level=8
@@ -664,6 +664,32 @@ rules
 			line-opacity : 80%
 			line-color : orange
 		draw : line
+// Duplication?
+//	target : stream
+//		define
+//			min-zoom : 13
+//			line-color : #78C1C1
+//			line-width : 13:1;14:2;16:3
+//		draw : line
+//		define
+//			min-zoom : 15
+//			font-size : 15:10;17:17
+//			font-style : italic
+//			font-weight : bold
+//			text-color : #78C1C1 black 10%
+//			map.rendering.lflp.min-buffer-space : 5
+//			map.rendering.lflp.max-allowed-corner-angle : 90
+//		draw : text
+//
+//	target: contour*
+//		define
+//			line-color : #7f3300
+//			line-opacity : 0.6
+//			curved : true
+//		if : *major
+//			define
+//				map.rendering.contour.label : true
+//				min-zoom : 12
 
 	target : stream
 		define
@@ -672,34 +698,8 @@ rules
 			line-width : 13:1;14:2;16:3
 		draw : line
 		define
-			min-zoom : 15
-			font-size : 15:10;17:17
-			font-style : italic
-			font-weight : bold
-			text-color : #78C1C1 black 10%
-			map.rendering.lflp.min-buffer-space : 5
-			map.rendering.lflp.max-allowed-corner-angle : 90
-		draw : text
-
-	target: contour*
-		define
-			line-color : #7f3300
-			line-opacity : 0.6
-			curved : true
-		if : *major
-			define
-				map.rendering.contour.label : true
-				min-zoom : 12
-
-	target : stream
-		define
 			min-zoom : 13
-			line-color : #78C1C1
-			line-width : 13:1;14:2;16:3
-		draw : line
-		define
-			min-zoom : 15
-			font-size : 15:10;17:17
+			font-size : 13:8;5:10;17:17
 			font-style : italic
 			font-weight : bold
 			text-color : #78C1C1 black 10%
