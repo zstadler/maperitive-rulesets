@@ -2,21 +2,22 @@ Create Israel Hiking Map similar to Israel Trails Committee (ITC)
 ================================
 
 The first part of following manual will explain how to create an Israel hiking style map (256x256 tiles).
+Note that this might be tricky on PCs that has windows 32bit and 4GB RAM (I managed to do it but i had to close all other running applications).
 The second part of the following manual will explain how to convert the map for offline use on an android device.
 
 Maperitive (Windows only)
 -------------------------
 
 1. Download Maperitive from: http://maperitive.net/, extract it to a desired location
-2. Go to https://github.com/HarelM/maperitive-rulesets/tree/master/IsraelHiking
-  a. click on the Files tab
-	b. click on the Zip with the cloud and arrow to download all the files
+2. Go to https://github.com/HarelM/maperitive-rulesets/tree/master/IsraelHiking (this site if you read this file in github)
+ * click on the Files tab
+ * click on the Zip with the cloud and arrow to download all the files
 3. The zip file will contain some unnecessary folders and files, the only folder needed from this zip is called IsraelHiking, place it inside your Maperitive installation folder
  * you should now have a folder ...\<Maperitive Install folder>\IsraelHiking\
 4. Download http://download.geofabrik.de/asia/israel-and-palestine-latest.osm.pbf and place it in the above folder
 5. Open Maperitive program, click File -> Run Script... and choose IsraelHiking\IsraelHiking.mscript
 
-This should generate 256x256 png tile files inside IsraelHiking\Tiles directory and should take long (about 2 hours or more).
+This should generate 256x256 png tile files inside IsraelHiking\Tiles directory and should take long (about 3 hours or more, I prefer to do it overnight, but you need to make sure you don't get out of memory).
 
 MOBAC and Oruxmaps
 -------------------------
@@ -33,7 +34,7 @@ MOBAC and Oruxmaps
 8. Under "Atlas Content" set name to Hiking In Israel Maperitive and click on "Add Selection"
 	this should result in adding the name to the tree, opening the tree should show the selected zoom levels
 9. Click "Create Atlas"
-10. A window should pop up with progress, make sure to check "ignore download errors", the operation should take about 3 hours (I think, I always run it overnight).
+10. A window should pop up with progress, make sure to check "ignore download errors", the operation should take about 20 Minutes.
 11. Once finished you should be able to find a folder under <MOBAC installation folder>\atlases\Israel Hiking_< Creation Date >\ called "Israel Hiking" 
 12. Copy the "Israel Hiking" folder (not the one with the date) to you android device under /sdcard/oruxmaps/mapfiles
 13. Enjoy, open a OSM account and add trails to make this map better :)
