@@ -360,25 +360,29 @@ rules
 				min-zoom : 6
 				line-color : blue
 				text-color : blue
-				shape-def : p:blue;pw:3;f:white;m:-9,0;-8,3;l:0,4;l:8,3;l:9,0;l:8,-3;l:0,-4;l:-8,-3;z
+				shape-def : p:white;pw:1.5;f:blue;m:-26,-21;l:-31,-16,-31,16,-26,21,26,21,31,16,31,-16,26,-21,-26,-21;z;pw:0;f:white;m:-26,0;l:-24,12,0,16,24,12,26,0,24,-12,0,-16,-24,-12,-26,0;z
 		elseif : * trunk
 			define
 				min-zoom : 7
 				line-color : red
 				text-color : red
-				shape-def : p:red;pw:3;f:white;m:-9,0;-8,3;l:0,4;l:8,3;l:9,0;l:8,-3;l:0,-4;l:-8,-3;z
+				// X values:	-31, -26, -24,  0, 24, 26, 31
+				// Y values:	-21, -16, -12,  0, 12, 16, 21
+				shape-def    : p:white;pw:1.5;f:red;m:-26,-21;l:-31,-16,-31,16,-26,21,26,21,31,16,31,-16,26,-21,-26,-21;z;pw:0;f:white;m:-26,0;l:-24,12,0,16,24,12,26,0,24,-12,0,-16,-24,-12,-26,0;z
+				// Rounded rectangular corners, as in the line below hit a Maperitive bug
+				// shape-def : p:white;pw:1.5;f:red;m:-26,-21;a:5,5,-31,-16;l:-31,16;a:5,5,-26,21;l:26,21;a:5,5,31,16;l:31,-16;a:5,5,26,-21;l:-26,-21;z;pw:0;f:white;m:-26,0;l:-24,12,0,16,24,12,26,0,24,-12,0,-16,-24,-12,-26,0;z
 		elseif : * primary
 			define
 				min-zoom : 9
 				line-color : green
 				text-color : green
-				shape-def : p:green;pw:3;f:white;m:-9,0;-8,3;l:0,4;l:8,3;l:9,0;l:8,-3;l:0,-4;l:-8,-3;z
+				shape-def : p:white;pw:1.5;f:green;m:-26,-21;l:-31,-16,-31,16,-26,21,26,21,31,16,31,-16,26,-21,-26,-21;z;pw:0;f:white;m:-26,0;l:-24,12,0,16,24,12,26,0,24,-12,0,-16,-24,-12,-26,0;z
 		elseif : * secondary
 			define
 				min-zoom : 10
 				line-color : #8B4513
 				text-color : #8B4513
-				shape-def : p:#8B4513;pw:3;f:white;m:-9,0;-8,3;l:0,4;l:8,3;l:9,0;l:8,-3;l:0,-4;l:-8,-3;z
+				shape-def : p:white;pw:1.5;f:#8B4513;m:-26,-21;l:-31,-16,-31,16,-26,21,26,21,31,16,31,-16,26,-21,-26,-21;z;pw:0;f:white;m:-26,0;l:-24,12,0,16,24,12,26,0,24,-12,0,-16,-24,-12,-26,0;z
 		elseif : * tertiary
 			define
 				min-zoom : 11
