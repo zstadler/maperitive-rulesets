@@ -34,12 +34,12 @@ load-source IsraelHiking\Israel.contours
 // generate-contours interval=10
 
 // Load the relief file created using "Israel Hiking Setup.mscript"
-load-image file=IsraelHiking\relief_Hiking_Igor.png background=true
+load-image file=IsraelHiking\relief_Hiking_Igor.png background=false
 //-// Alternatively, the relief can be created using:
 // generate-relief-igor
 
 // Load the relief file created using "Israel Hiking Setup.mscript"
-load-image file=IsraelHiking\relief_Hiking_Slopeshading.png background=true
+//load-image file=IsraelHiking\relief_Hiking_Slopeshading.png background=true
 //-// Alternatively, the relief can be created using:
 // generate-relief-slopeshading
 

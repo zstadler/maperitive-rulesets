@@ -668,32 +668,6 @@ rules
 			line-opacity : 80%
 			line-color : orange
 		draw : line
-// Duplication?
-//	target : stream
-//		define
-//			min-zoom : 13
-//			line-color : #78C1C1
-//			line-width : 13:1;14:2;16:3
-//		draw : line
-//		define
-//			min-zoom : 15
-//			font-size : 15:10;17:17
-//			font-style : italic
-//			font-weight : bold
-//			text-color : #78C1C1 black 10%
-//			map.rendering.lflp.min-buffer-space : 5
-//			map.rendering.lflp.max-allowed-corner-angle : 90
-//		draw : text
-//
-//	target: contour*
-//		define
-//			line-color : #7f3300
-//			line-opacity : 0.6
-//			curved : true
-//		if : *major
-//			define
-//				map.rendering.contour.label : true
-//				min-zoom : 12
 
 	target : stream
 		define
@@ -709,6 +683,9 @@ rules
 			text-color : #78C1C1 black 10%
 			map.rendering.lflp.min-buffer-space : 5
 			map.rendering.lflp.max-allowed-corner-angle : 90
+		for : @isMatch(name, "[א-ת]")
+			define
+				text-direction : rtl
 		draw : text
 
 	target: contour*
