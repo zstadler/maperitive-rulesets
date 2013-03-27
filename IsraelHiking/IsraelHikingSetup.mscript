@@ -5,8 +5,7 @@
 set-geo-bounds 34.00842,29.32535,35.92745,33.398339999
 
 // create and save the relief-igor background
-// This will create a very light shading, we took this image and placed 3 of those to create darker shades.
-generate-relief-igor
+generate-relief-igor intensity=6 color=#808080
 save-source IsraelHiking\relief_Hiking_Igor.png
 
 // create and save the relief-slopeshading background
