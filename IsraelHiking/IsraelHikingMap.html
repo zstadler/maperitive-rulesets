@@ -1,0 +1,22 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Maperitive Local Maps</title>
+    <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.5.1/leaflet.css" />
+    <!--[if lte IE 8]>
+	<link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.5.1/leaflet.ie.css" />
+    <![endif]-->
+  </head>
+  <body style="margin:0">
+    <div id="map" style="position:absolute; width:100%; height:100%;"></div>
+    <script src="http://cdn.leafletjs.com/leaflet-0.5.1/leaflet.js"></script>>
+    <script>
+      var map = L.map('map').setView([31.3618449995, 34.967935], 8); 
+      L.tileLayer('Tiles/{z}/{x}/{y}.png', {
+	attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>',
+	minZoom : 7,
+	maxZoom: 15
+      }).addTo(map);   
+    </script>
+  </body>
+</html>
