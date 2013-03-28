@@ -488,6 +488,25 @@ rules
 			shield-resize-mode : free
 		draw : shield
 
+// Street names
+	target : road *
+		if : $regex("(.* motorway)|(.* trunk)|(.* primary)|(.* secondary)")
+			stop
+		define
+			min-zoom : 15
+			font-weight : bold
+			font-family : Verdana
+			text-max-width : 7
+			text-halo-width : 66%
+			text-halo-opacity : 0.66
+			text-align-horizontal : center
+			text-align-vertical : center
+			font-stretch : 0.9
+		for : @isMatch(name, "[א-ת؀-ݭ]")
+			define
+				text-direction : rtl
+		draw : text
+			
 
 	target : road *
 		if : * minor
