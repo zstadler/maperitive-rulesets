@@ -80,12 +80,12 @@ features
 		road major primary : @isOneOf(highway, primary, primary_link) AND NOT @isOneOf(is_in, Jordan, Egypt, Syria, Lebanon)
 		road major secondary : @isOneOf(highway, secondary, secondary_link) AND NOT @isOneOf(is_in, Jordan, Egypt, Syria, Lebanon)
 		road major tertiary : @isOneOf(highway, tertiary, tertiary_link) AND NOT @isOneOf(is_in, Jordan, Egypt, Syria, Lebanon)
-		road minor : @isOneOf(highway, residential, unclassified, living_street, road) AND NOT @isOneOf(is_in, Jordan, Egypt, Syria, Lebanon)
+		road minor : @isOneOf(highway, residential, unclassified, living_street, service, road) AND NOT @isOneOf(is_in, Jordan, Egypt, Syria, Lebanon)
 		track major : highway=track AND @isOneOf(tracktype, grade1, grade2)
 		track minor : highway=track AND  (@isOneOf(tracktype, grade3, grade4, grade5) OR NOT tracktype) 
 		railway rail : railway=rail
 		power line : @isOneOf(power, line, minor_line)
-		stream : @isOneOf(waterway, stream, river)
+		stream : @isOneOf(waterway, stream, river, wadi)
 		boundary country : boundary=administrative AND admin_level=2 AND NOT natural=coastline
 //		boundary province : boundary=administrative AND (admin_level=4 OR admin_level=6)
 //		boundary municipal : boundary=administrative AND admin_level=8
@@ -100,7 +100,7 @@ features
 		military : landuse=military OR military=danger_area
 
 properties
-	curved : true
+	// curved : true
 	text-halo-width : 30%
 	text-halo-opacity : 0.75
 	map-background-color : white
@@ -692,7 +692,10 @@ rules
 		define
 			min-zoom : 13
 			line-color : #78C1C1
-			line-width : 13:1;14:2;16:3
+			line-width : 10:1;15:3
+		for : waterway = wadi
+			define
+				line-style : dash
 		draw : line
 		define
 			min-zoom : 13
