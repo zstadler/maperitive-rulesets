@@ -9,6 +9,7 @@
 
 // History:
 // --------
+// 2013-04-05: Added picnic, parking and coast to coast
 // 2013-03-15: Use ITM Grid Lines
 // 2013-03-02: Added Grid Lines
 // 2013-02-24: Uploaded to GitHub
@@ -23,10 +24,8 @@
 //		- added special rendering for tunnels
 
 // TODO (stuff still missing, will be added soon)
-// parking "Icons\SJJB\png\transport_parking.n.32.png"
 // viewpoint "Icons\SJJB\png\tourist_view_point.p.32.png"
 // archeological "Icons\SJJB\png\tourist_archaeological.p.32.png"
-// picknic "Icons\SJJB\png\tourist_picnic.p.32.png"
 
 
 // drinking water
@@ -54,8 +53,10 @@ features
 		water spring : natural=spring
 		water well : man_made=water_well
 		water cistern : man_made=cistern
-		grid label north : grid AND @isMulti(east,10) AND @isMulti(north,2)
-		grid label east : grid AND @isMulti(north,10) AND @isMulti(east,2)
+		picnic : @isOneOf(leisure, picnic, picnic_table) OR tourism=picnic_site
+		parking : amenity=parking
+		grid label north : grid AND @isMulti(east, 10) AND @isMulti(north, 2)
+		grid label east : grid AND @isMulti(north, 10) AND @isMulti(east, 2)
 
 	lines
 //		aerialway : aerialway
@@ -70,6 +71,7 @@ features
 		hiking regional kineret roundabout trail : relation[network = rcn @isMatch(name:en1,"Sea of Galilee Bicycle Route")] 
 		hiking regional jerusalem trail: relation[network = rwn @isMatch(name:en,"Jerusalem Trail")]
 		hiking regional northern galilee trail: relation[network = rwn @isMatch(name:en,"Northern Galilee Regional Trail")]
+		hiking regional coast to coast: relation[network = rwn @isMatch(name:en,"Coast to Coast")]
 		hiking national: relation[network = nwn]
 
 		cycle path : highway=cycleway 
@@ -224,6 +226,20 @@ rules
 			fill-color : blue
 		draw : shape
 
+	target : picnic
+		define
+			min-zoom : 12
+			icon-image : icons/SJJB/png/tourist_picnic.p.32.png
+			icon-width : 12:16;14:16;15:24
+		draw : icon
+		
+	target : parking
+		define
+			min-zoom : 13
+			icon-image : icons/SJJB/png/transport_parking.n.32.png
+			icon-width : 16
+		draw : icon
+		
 //	target: shelter
 //		define
 //			icon-image : icons/SJJB/png/accommodation_shelter2.n.32.png
@@ -414,15 +430,18 @@ rules
 			elsefor : length > 8
 				define
 					min-zoom : 8
-			elsefor : length > 4
+			elsefor : length > 6
 				define
 					min-zoom : 9
-			elsefor : length > 2
+			elsefor : length > 4
 				define
 					min-zoom : 10
-			else
+			elsefor : length > 2
 				define
 					min-zoom : 11
+			else
+				define
+					min-zoom : 12
 		elseif : * trunk
 			for : length > 32
 				define
@@ -433,10 +452,10 @@ rules
 			elsefor : length > 8
 				define
 					min-zoom : 9
-			elsefor : length > 4
+			elsefor : length > 6
 				define
 					min-zoom : 10
-			elsefor : length > 2
+			elsefor : length > 4
 				define
 					min-zoom : 11
 			else
@@ -449,10 +468,10 @@ rules
 			elsefor : length > 8
 				define
 					min-zoom : 10
-			elsefor : length > 4
+			elsefor : length > 6
 				define
 					min-zoom : 11
-			elsefor : length > 2
+			elsefor : length > 4
 				define
 					min-zoom : 12
 			else
@@ -620,7 +639,7 @@ rules
 		if : * jerusalem trail
 			define
 				line-color : blue
-		elseif : *golan trail
+		elseif : * golan trail
 			define
 				line-color : blue
 		elseif : * jesus trail 
@@ -629,9 +648,12 @@ rules
 		elseif : * kineret roundabout trail
 			define
 				line-color : purple
-		elseif : *northern galilee trail
+		elseif : * northern galilee trail
 			define
 				line-color : purple
+		elseif : * coast to coast
+			define
+				line-color : yellow
 		else
 			stop
 		draw : line
@@ -647,7 +669,7 @@ rules
 		if : * jerusalem trail
 			define
 				line-color : yellow
-		elseif : *golan trail
+		elseif : * golan trail
 			define
 				line-color : green
 		elseif : * jesus trail 
@@ -656,7 +678,10 @@ rules
 		elseif : * kineret roundabout trail
 			define
 				line-color : white black 10%
-		elseif : *northern galilee trail
+		elseif : * northern galilee trail
+			define
+				line-color : white black 10%
+		elseif : * coast to coast
 			define
 				line-color : white black 10%
 		else
