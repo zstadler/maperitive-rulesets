@@ -235,7 +235,7 @@ rules
 		
 	target : parking
 		define
-			min-zoom : 13
+			min-zoom : 15
 			icon-image : icons/SJJB/png/transport_parking.n.32.png
 			icon-width : 16
 		draw : icon
