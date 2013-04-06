@@ -24,7 +24,6 @@
 //		- added special rendering for tunnels
 
 // TODO (stuff still missing, will be added soon)
-// viewpoint "Icons\SJJB\png\tourist_view_point.p.32.png"
 // archeological "Icons\SJJB\png\tourist_archaeological.p.32.png"
 
 
@@ -56,6 +55,7 @@ features
 		picnic : @isOneOf(leisure, picnic, picnic_table) OR tourism=picnic_site
 		parking : amenity=parking
 		camp site : tourism=camp_site
+		view : tourism=viewpoint
 		grid label north : grid AND @isMulti(east, 10) AND @isMulti(north, 2)
 		grid label east : grid AND @isMulti(north, 10) AND @isMulti(east, 2)
 
@@ -234,7 +234,14 @@ rules
 			icon-image : icons/SJJB/png/accommodation_camping.p.32.png
 			icon-width : 14:16;15:24
 		draw : icon
-
+	
+	target : view
+		define
+			min-zoom : 12
+			icon-image : icons/SJJB/png/tourist_view_point.p.32.png
+			icon-width : 14:16;15:24
+		draw : icon
+	
 	target : parking
 		define
 			min-zoom : 15
