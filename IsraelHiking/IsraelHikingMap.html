@@ -1,22 +1,48 @@
 <html>
-  <head>
-    <meta charset="utf-8" />
-    <title>Israel Hiking Map - OSM</title>
-    <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.5.1/leaflet.css" />
-    <!--[if lte IE 8]>
-	<link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.5.1/leaflet.ie.css" />
-    <![endif]-->
-  </head>
-  <body style="margin:0">
-    <div id="map" style="position:absolute; width:100%; height:100%;"></div>
-    <script src="http://cdn.leafletjs.com/leaflet-0.5.1/leaflet.js"></script>>
-    <script>
-      var map = L.map('map').setView([31.3618449995, 34.967935], 8); 
-      L.tileLayer('Tiles/{z}/{x}/{y}.png', {
-	attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>',
-	minZoom : 7,
-	maxZoom: 15
-      }).addTo(map);   
-    </script>
-  </body>
+	<head>
+		<meta charset="utf-8" />
+		<title>Israel Hiking Map - OSM</title>
+		<link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.5.1/leaflet.css" />
+		<!--[if lte IE 8]>
+		<link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.5.1/leaflet.ie.css" />
+		<![endif]-->
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+	</head>
+	<body style="margin:0; padding:0; height:100%">
+		<div class="container" style="margin-left:10px">
+			<div id="Info" style="float:left; width:20%;font-family:arial">
+				<H1> Israel Hiking Project</H1>
+				<p> This map was generated from <a href="http://www.openstreetmap.org/">Open Street Map</a> data. This data is free and can be viewed or edited <a href="http://www.openstreetmap.org/">here</a>. All you need to do is create an account and start mapping.</p>
+				<p> This map can be <a href="https://www.dropbox.com/sh/pbm3775o57zw5nj/-F61m2RwLF">downloaded</a> and used offline on Android devices. You'll need to download <a href="https://play.google.com/store/apps/details?id=com.orux.oruxmaps">OruxMaps</a> and place the two files on your SD card under /sdcard/oruxmaps/mapfiles/IsraelHiking.</p>
+				<H4> Below are some links related to this project </H4>
+				<ul>
+					<li><a href="https://github.com/HarelM/maperitive-rulesets/tree/master/IsraelHiking">Github</a> - where we store all files related to generation of the map and some instructions on how to DIYS.</li>
+					<li><a href="http://wiki.openstreetmap.org/wiki/WikiProject_Israel">Israel OSM Wiki Project</a> - where you can find some basic rules on how to add data to OSM.</li>
+					<li><a href="http://forum.openstreetmap.org/viewforum.php?id=33">Israel OSM Forum</a> - where you can post questions and look for answers.</li>
+				</ul>
+			</div>
+			<div id="map" style="float:left; width:80%; height:100%;"></div>
+		</div>
+		<script src="http://cdn.leafletjs.com/leaflet-0.5.1/leaflet.js"></script>
+		<script>
+			var map = L.map('map').setView([31.3618449995, 34.967935], 8);
+			L.tileLayer('Tiles/{z}/{x}/{y}.png', {
+				attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>',
+				minZoom : 7,
+				maxZoom: 15
+			}).addTo(map);
+			
+			function onLocationFound(e) {
+				var radius = e.accuracy / 2;
+				L.marker(e.latlng).addTo(map)
+				.bindPopup("You are within " + radius + " meters from this point").openPopup();
+				L.circle(e.latlng, radius).addTo(map);
+			}
+			
+			map.on('locationfound', onLocationFound);
+			
+			// this part allows the map to be located where the user is - currently commented
+			//map.locate({setView: true, maxZoom: 15});
+		</script>
+	</body>
 </html>
