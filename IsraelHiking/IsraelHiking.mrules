@@ -9,7 +9,7 @@
 
 // History:
 // --------
-// 2013-04-05: Added picnic, parking and coast to coast
+// 2013-04-05: Added picnic, campsite, parking, and coast to coast
 // 2013-03-15: Use ITM Grid Lines
 // 2013-03-02: Added Grid Lines
 // 2013-02-24: Uploaded to GitHub
@@ -55,6 +55,7 @@ features
 		water cistern : man_made=cistern
 		picnic : @isOneOf(leisure, picnic, picnic_table) OR tourism=picnic_site
 		parking : amenity=parking
+		camp site : tourism=camp_site
 		grid label north : grid AND @isMulti(east, 10) AND @isMulti(north, 2)
 		grid label east : grid AND @isMulti(north, 10) AND @isMulti(east, 2)
 
@@ -62,10 +63,6 @@ features
 //		aerialway : aerialway
 		contour major : contour[@isMulti(elevation, 100)]
 		contour minor : contour[@isMulti(elevation, 10) and not @isMulti(elevation, 100)]
-		hiking route : relation[type=route route=foot] way[trailblazed=yes]
-//		hiking route major : relation[type=route route=foot @isOneOf(network, iwn, nwn)]
-//		hiking route minor : relation[type=route route=foot @isOneOf(network, rwn, lwn)]
-//		hiking route other : trailblazed=yes
 		hiking regional jesus trail: relation[network = rwn @isMatch(name:en,"Jesus Trail")]
 		hiking regional golan trail: relation[network = rwn @isMatch(name:en1,"Golan Trail")]
 		hiking regional kineret roundabout trail : relation[network = rcn @isMatch(name:en1,"Sea of Galilee Bicycle Route")] 
@@ -89,8 +86,6 @@ features
 		power line : @isOneOf(power, line, minor_line)
 		stream : @isOneOf(waterway, stream, river, wadi)
 		boundary country : boundary=administrative AND admin_level=2 AND NOT natural=coastline
-//		boundary province : boundary=administrative AND (admin_level=4 OR admin_level=6)
-//		boundary municipal : boundary=administrative AND admin_level=8
 		grid : grid
 
 	areas
@@ -230,16 +225,23 @@ rules
 		define
 			min-zoom : 12
 			icon-image : icons/SJJB/png/tourist_picnic.p.32.png
-			icon-width : 12:16;14:16;15:24
+			icon-width : 14:16;15:24
 		draw : icon
-		
+
+	target : camp site
+		define
+			min-zoom : 12
+			icon-image : icons/SJJB/png/accommodation_camping.p.32.png
+			icon-width : 14:16;15:24
+		draw : icon
+
 	target : parking
 		define
 			min-zoom : 15
 			icon-image : icons/SJJB/png/transport_parking.n.32.png
 			icon-width : 16
 		draw : icon
-		
+
 //	target: shelter
 //		define
 //			icon-image : icons/SJJB/png/accommodation_shelter2.n.32.png
@@ -310,33 +312,6 @@ rules
 			curved : false
 			min-zoom : 15.5
 			line-width : 1
-		draw : line
-
-	target: hiking route*
-		define
-			line-color : red
-			line-opacity : 0.8
-			line-offset : 14:0;15:3;16:5
-			line-offset-sides : left
-		for : network=nwn
-			define
-				min-zoom : 10
-				line-width : 10:1;11:2;15:7
-		else
-			define
-				min-zoom : 12
-				line-width : 11:1;14:2;15:4
-		draw : line
-
-	target: hiking path
-		define
-			min-zoom : 12
-			line-color : red
-			line-opacity : 0.8
-			line-width : 11:1;14:2;15:4
-			line-offset : 14:0;15:3;16:5
-			line-offset-sides : left
-			line-style : dash
 		draw : line
 
 	target : railway rail
@@ -418,6 +393,7 @@ rules
 // Major Road Sheilds
 // The length in Km is computed by a Python routine
 
+		// default min-zoom is set for safety
 		define
 			min-zoom : 22
 
@@ -521,11 +497,10 @@ rules
 			text-align-horizontal : center
 			text-align-vertical : center
 			font-stretch : 0.9
-		for : @isMatch(name, "[א-ת؀-ݭ]")
+		for : @isMatch(name, "[א-ת؀-ݭﬠ-ﻼ]")
 			define
 				text-direction : rtl
 		draw : text
-			
 
 	target : road *
 		if : * minor
@@ -606,7 +581,7 @@ rules
 	target : *path*
 		// foot paths and cycle paths
 		define
-			line-width : 13:1.5;14:2
+			line-width : 12:1;13:1.5;14:2
 			line-style : dash
 			min-zoom : 13
 		for : colour = red
@@ -730,7 +705,7 @@ rules
 			text-color : #78C1C1 black 10%
 			map.rendering.lflp.min-buffer-space : 5
 			map.rendering.lflp.max-allowed-corner-angle : 90
-		for : @isMatch(name, "[א-ת]")
+		for : @isMatch(name, "[א-ת؀-ݭﬠ-ﻼ]")
 			define
 				text-direction : rtl
 		draw : text
@@ -835,12 +810,15 @@ rules
 			line-opacity : 0.75
 		if : boundary country
 			for : @isMatch(name, "1949 .*$")
+				// 1949 armistice line - "The Green Line"
 				define
 					line-color : green
 			elsefor : note = "UN Resolution 497, UNDOF"
+				// Israel-Syria Agreement on Disengagement Line A "Alpha"
 				define
 					line-color : blue
 			elsefor : note = "UNDOF line Bravo"
+				// Israel-Syria Agreement on Disengagement Line B "Bravo" 
 				define
 					line-color : red
 			elsefor : note = "DMZ"
@@ -852,16 +830,6 @@ rules
 				line-width : 6:1;9:3;10:6
 //				text : @any([[name:he]], [[name:en]], name)
 //			draw : text
-		elseif : boundary province
-			define
-				min-zoom : 19
-				line-width : 4:1;11:3
-				line-style : dash
-		elseif : boundary municipal
-			define
-				min-zoom : 12
-				line-width : 12:1;14:2
-				line-style : dash
 		draw : line		
 
 	target : water
