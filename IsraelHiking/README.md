@@ -1,8 +1,7 @@
 Create Israel Hiking Map similar to Israel Trails Committee (ITC)
 ================================
 
-The output of the map can be seen in the following address (cannot be seen in Google Chrome for some reason):
-https://googledrive.com/host/0B07v7z6-1l1_TW1Ba3pQVm1NQzA/IsraelHikingMap.html
+The output of the map can be seen on Dropbox: http://db.tt/Shtcke7a
 
  * The first part of following manual will explain how to create an Israel hiking style map (256x256 PNG tiles).
 Note that this might be tricky on PCs that has windows 32bit and 4GB RAM (I managed to do it but i had to close all other running applications).

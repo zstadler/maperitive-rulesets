@@ -9,32 +9,35 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
 	</head>
 	<body style="margin:0; padding:0; height:100%">
-		<div class="container" style="margin-left:10px">
-			<div id="Info" style="float:left; width:20%;font-family:arial">
+		<div class="container" style=>
+			<div id="Info" style="float:left; width:25%;font-family:arial;margin-left:10px;margin-right:10px">
 				<H1> Israel Hiking Project</H1>
-				<p> This map was generated from <a href="http://www.openstreetmap.org/">Open Street Map</a> data. This data is free and can be viewed or edited <a href="http://www.openstreetmap.org/">here</a>. All you need to do is create an account and start mapping.</p>
-				<p> The map can also be <a href="oruxmaps mapfiles/Israel Hiking/" target="_blank">downloaded</a> and used offline on Android devices. You'll need to install <a href="https://play.google.com/store/apps/details?id=com.orux.oruxmaps">OruxMaps</a> and place the two files on your SD card under /sdcard/oruxmaps/mapfiles/IsraelHiking.</p>
+				<p> This map was generated from <a href="http://www.openstreetmap.org/" target="_blank">Open Street Map (OSM)</a> data where it can be be viewed and edited. All you need to do is create an account and start mapping.</p>
+				<p> The map can also be <a href="https://www.dropbox.com/sh/ujxnhr5zjc94g8h/3DEaDZUwNd/Israel Hiking/oruxmaps mapfiles/Israel Hiking" target="_blank">downloaded</a> and used offline on Android devices. You'll need to install <a href="https://play.google.com/store/apps/details?id=com.orux.oruxmaps" target="_blank">OruxMaps</a> and place the two files on your SD card under <br>/sdcard/oruxmaps/mapfiles/IsraelHiking.</p>
 				<H4> Below are some links related to this project </H4>
 				<ul>
-					<li><a href="https://github.com/HarelM/maperitive-rulesets/tree/master/IsraelHiking#create-israel-hiking-map-similar-to-israel-trails-committee-itc">Github</a> - where we store all files related to generation of the map and some instructions on how to Do It Yourself.</li>
-					<li><a href="http://wiki.openstreetmap.org/wiki/WikiProject_Israel">Israel OSM Wiki Project</a> - where you can find some basic rules on how to add data to OSM.</li>
-					<li><a href="http://forum.openstreetmap.org/viewforum.php?id=33">Israel OSM Forum</a> - where you can post questions and look for answers.</li>
+					<li>See <a href="https://github.com/HarelM/maperitive-rulesets/tree/master/IsraelHiking#create-israel-hiking-map-similar-to-israel-trails-committee-itc" target="_blank">Github</a> for files and instructions on how to create the map by yourself</li>
+					<li>See <a href="http://wiki.openstreetmap.org/wiki/WikiProject_Israel" target="_blank">Israel OSM Wiki Project</a> for common rules of the Israeli >Open Street Map community</li>
+					<li>See <a href="http://forum.openstreetmap.org/viewforum.php?id=33" target="_blank">Israel OSM Forum</a> for the Israeli OSM forum where you can post questions and look for answers</li>
 				</ul>
-				<p>
 				<i>
-					Please consider <a href="http://db.tt/iB36k7K">joining Dropbox using this link</a>. Both you and this project will receive a 500Mb bonus.
+				<p>
+					Please consider <a href="http://db.tt/iB36k7K" target="_blank">joining Dropbox using this link</a>. Both you and this project will receive a 500Mb free storage bonus.
+				</p>
+				<p align="right">
 					Thank you for your support!<br>
 					Harel and Zeev
-				</i>
 				</p>
+				</i>
 			</div>
-			<div id="map" style="float:left; width:80%; height:100%;"></div>
+			<!-- Need to use 78% instead of 80% for the map's div to overcome an IE bug -->
+			<div id="map" style="float:left; width:78%; height:100%;"></div>
 		</div>
 		<script src="http://cdn.leafletjs.com/leaflet-0.5.1/leaflet.js"></script>
 		<script>
 			var map = L.map('map').setView([31.3618449995, 34.967935], 8);
 			L.tileLayer('Tiles/{z}/{x}/{y}.png', {
-				attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>',
+				attribution: 'Map data &copy; <a href="http://openstreetmap.org" target="_blank">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/" target="_blank">CC-BY-SA</a>',
 				minZoom : 7,
 				maxZoom: 15
 			}).addTo(map);
