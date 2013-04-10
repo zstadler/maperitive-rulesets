@@ -1,7 +1,7 @@
 Create Israel Hiking Map similar to Israel Trails Committee (ITC)
 ================================
 
-The output of the map can be seen on Dropbox: http://db.tt/Shtcke7a
+The output of the map can be seen on [here](http://db.tt/Shtcke7a)
 
  * The first part of following manual will explain how to create an Israel hiking style map (256x256 PNG tiles).
 Note that this might be tricky on PCs that has windows 32bit and 4GB RAM (I managed to do it but i had to close all other running applications).
@@ -13,23 +13,22 @@ The output of this entire manual can be downloaded from the following address:
 Maperitive (Windows only)
 -------------------------
 
-1. Download Maperitive from: http://maperitive.net/, extract it to a desired location
-2. Go to https://github.com/HarelM/maperitive-rulesets/tree/master/IsraelHiking (this site if you read this file in github)
+1. Download [Maperitive] (http://maperitive.net/) and extract it to a desired location
+2. Go to [Israel Hiking on GitHub](https://github.com/HarelM/maperitive-rulesets/tree/master/IsraelHiking) (this site if you read this file in github)
  * click on the Files tab
  * click on the Zip with the cloud and arrow to download all the files
 3. The zip file will contain some unnecessary folders and files, the only folder needed from this zip is called IsraelHiking, place it inside your Maperitive installation folder
  * you should now have a folder ...\<Maperitive Install folder\>\IsraelHiking\
-4. Download http://download.geofabrik.de/asia/israel-and-palestine-latest.osm.pbf and place it in the above folder
+4. Download [OSM Data for the region](http://download.geofabrik.de/asia/israel-and-palestine-latest.osm.pbf) and place it in the above folder
 5. Open Maperitive program, click File -> Run Script... and choose IsraelHiking\IsraelHiking.mscript
 
 This should generate 256x256 png tile files inside IsraelHiking\Tiles directory and should take long (about 3 hours or more, I prefer to do it overnight, but you need to make sure you don't get out of memory).
 
 MOBAC and Oruxmaps
 -------------------------
-1. In order to use an offline version of this map in an android device first install Oruxmaps from the play store, 
-	https://play.google.com/store/apps/details?id=com.orux.oruxmaps
+1. In order to use an offline version of this map in an android device first install Oruxmaps from the [play store](https://play.google.com/store/apps/details?id=com.orux.oruxmaps)
 	this app is free of charge and does not have ads, it was not created by me but I felt the need to buy the "donate version."
-2. Download MOBAC (MOBile Atlas Creator) from http://mobac.sourceforge.net/
+2. Download [MOBAC - MOBile Atlas Creator](http://mobac.sourceforge.net/)
 2. Open IsraelHiking.xml file and change the \<sourceFolder\> tag to where the tiles were created (...\<Maperitive Install folder>\IsraelHiking\Tiles - full path).
 3. Place the IsraelHiking.xml file in \<MOBAC installtion folder\>\mapsources\
 4. Open MOBAC (it takes some time since it runs on java) and choose oruxmaps sqlite
