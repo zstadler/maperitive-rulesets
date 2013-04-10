@@ -389,12 +389,29 @@ rules
 			define
 				min-zoom : 14
 				line-color : white
+
+		// Colors for Hiking Trail on roads
+		for : colour = red
+			define
+				border-color : red
+		elsefor : colour = blue
+			define
+				border-color : blue
+		elsefor : colour = black
+			define
+				border-color : black
+		elsefor : colour = green
+			define
+				border-color : green
+		else
+			define
+				border-color : black
+				border-opacity : 0.8
+
 		define
 			line-width : 10:0.5;13:2;14:2;16:3
 			border-style : solid
-			border-color : black
 			border-width : 80%
-			border-opacity : 0.8
 		draw : line
 
 // Major Road Sheilds
@@ -510,6 +527,7 @@ rules
 		draw : text
 
 	target : road *
+	// Narrow 1px lines at low zoom levels
 		if : * minor
 			define
 				min-zoom : 11
