@@ -1,4 +1,4 @@
-<html>
+﻿<html>
 	<head>
 		<meta charset="utf-8" />
 		<title>Israel Hiking Map - OSM</title>
@@ -9,9 +9,14 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
 	</head>
 	<body style="margin:0; padding:0; height:100%">
-		<div class="container" style=>
-			<div id="Info" style="float:left; width:25%;font-family:arial;margin-left:10px;margin-right:10px">
-				<H1> Israel Hiking Project</H1>
+		<div class="container" style="margin:auto;font-family:arial;">
+			<center>
+				<H1>Israel Hiking Project</H1>
+				<a href="IsraelHikingMapHe.html">עברית</a>
+				<!-- Need to use 78% instead of 80% for the map's div to overcome an IE bug -->
+				<div id="map" style="float:center;width:78%; height:100%;"></div>
+			</center>
+			<div id="Info" style="width:80%;margin-left:10%">
 				<p> This map was generated from <a href="http://www.openstreetmap.org/" target="_blank">Open Street Map (OSM)</a> data where it can be be viewed and edited. All you need to do is create an account and start mapping.</p>
 				<p> The map can also be <a href="https://www.dropbox.com/sh/ujxnhr5zjc94g8h/3DEaDZUwNd/Israel Hiking/oruxmaps mapfiles/Israel Hiking" target="_blank">downloaded</a> and used offline on Android devices. You'll need to install <a href="https://play.google.com/store/apps/details?id=com.orux.oruxmaps" target="_blank">OruxMaps</a> and place the two files on your SD card under <br>/sdcard/oruxmaps/mapfiles/IsraelHiking.</p>
 				<H4> Below are some links related to this project </H4>
@@ -30,8 +35,6 @@
 				</p>
 				</i>
 			</div>
-			<!-- Need to use 78% instead of 80% for the map's div to overcome an IE bug -->
-			<div id="map" style="float:left; width:78%; height:100%;"></div>
 		</div>
 		<script src="http://cdn.leafletjs.com/leaflet-0.5.1/leaflet.js"></script>
 		<script>
