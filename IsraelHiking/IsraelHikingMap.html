@@ -12,6 +12,7 @@
 		<div class="container" style="margin:auto;font-family:arial;">
 			<center>
 				<H1>Israel Hiking Project</H1>
+				<link rel="icon" href="favicon.ico" />
 				<a href="IsraelHikingMapHe.html">עברית</a>
 				<!-- Need to use 78% instead of 80% for the map's div to overcome an IE bug -->
 				<div id="map" style="float:center;width:78%; height:100%;"></div>
@@ -22,8 +23,8 @@
 				<H4> Below are some links related to this project </H4>
 				<ul>
 					<li>See <a href="https://github.com/HarelM/maperitive-rulesets/tree/master/IsraelHiking#create-israel-hiking-map-similar-to-israel-trails-committee-itc" target="_blank">Github</a> for files and instructions on how to create the map by yourself</li>
-					<li>See <a href="http://wiki.openstreetmap.org/wiki/WikiProject_Israel" target="_blank">Israel OSM Wiki Project</a> for common rules of the Israeli >Open Street Map community</li>
-					<li>See <a href="http://forum.openstreetmap.org/viewforum.php?id=33" target="_blank">Israel OSM Forum</a> for the Israeli OSM forum where you can post questions and look for answers</li>
+					<li>See <a href="http://wiki.openstreetmap.org/wiki/WikiProject_Israel" target="_blank">Israel OSM Wiki Project</a> for common rules of the Israeli Open Street Map community</li>
+					<li>See <a href="http://forum.openstreetmap.org/viewforum.php?id=33" target="_blank">Israel OSM Forum</a> for the Israeli Open Street Map forum where you can post questions and look for answers</li>
 				</ul>
 				<i>
 				<p>
@@ -40,7 +41,7 @@
 		<script>
 			var map = L.map('map').setView([31.3618449995, 34.967935], 8);
 			L.tileLayer('Tiles/{z}/{x}/{y}.png', {
-				attribution: 'Map data &copy; <a href="http://openstreetmap.org" target="_blank">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/" target="_blank">CC-BY-SA</a>',
+				attribution: 'Map data &copy; <a href="http://openstreetmap.org" target="_blank">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/" target="_blank">CC-BY-SA</a> <button onclick="onLocateClick()">Show my location</button>',
 				minZoom : 7,
 				maxZoom: 15
 			}).addTo(map);
@@ -54,8 +55,9 @@
 			
 			map.on('locationfound', onLocationFound);
 			
-			// this part allows the map to be located where the user is - currently commented
-			//map.locate({setView: true, maxZoom: 15});
+			function onLocateClick() {
+				map.locate({setView: true, maxZoom: 15});
+			}
 		</script>
 	</body>
 </html>
