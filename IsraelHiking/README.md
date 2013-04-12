@@ -1,14 +1,12 @@
 Create Israel Hiking Map similar to Israel Trails Committee (ITC)
 ================================
 
-The output of the map can be seen on [here](http://db.tt/Shtcke7a)
+The output of the map can be seen and downloaded [here](http://db.tt/Shtcke7a). Below the map you'll be able to find a download link and some basic instructions.
 
  * The first part of following manual will explain how to create an Israel hiking style map (256x256 PNG tiles).
 Note that this might be tricky on PCs that has windows 32bit and 4GB RAM (I managed to do it but i had to close all other running applications).
  * The second part of the following manual will explain how to convert the map for offline use on an android device.
 
-The output of this entire manual can be downloaded from the following address:
- - Google Drive Israel Hiking zip (link will be updated shortly)
 
 Maperitive (Windows only)
 -------------------------
