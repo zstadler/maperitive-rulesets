@@ -7,38 +7,153 @@
 		<link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.5.1/leaflet.ie.css" />
 		<![endif]-->
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+		<link rel="icon" href="favicon.ico" />
 	</head>
 	<body style="margin:0; padding:0; height:100%">
 		<div class="container" style="margin:auto;font-family:arial;">
-			<center>
-				<H1>Israel Hiking Project</H1>
-				<link rel="icon" href="favicon.ico" />
-				<a href="IsraelHikingMapHe.html">עברית</a>
-				<!-- Need to use 78% instead of 80% for the map's div to overcome an IE bug -->
-				<div id="map" style="float:center;width:78%; height:100%;"></div>
-			</center>
-			<div id="Info" style="width:80%;margin-left:10%">
-				<p> This map was generated from <a href="http://www.openstreetmap.org/" target="_blank">Open Street Map (OSM)</a> data where it can be be viewed and edited. All you need to do is create an account and start mapping.</p>
-				<p> The map can also be <a href="https://www.dropbox.com/sh/ujxnhr5zjc94g8h/9Z_DGVRiC2/Israel%20Hiking/oruxmaps%20mapfiles" target="_blank">downloaded</a> and used offline on Android devices. You'll need to install <a href="https://play.google.com/store/apps/details?id=com.orux.oruxmaps" target="_blank">OruxMaps</a> and place the "Israel Hiking" directory with its two files on your SD card under <br>/sdcard/oruxmaps/mapfiles</p>
+			<div id="Info" class="Info">
+				<H1 id="Header">Israel Hiking Project</H1>
+				<p> This map was generated from <a class="OSM">Open Street Map (OSM)</a> data where it can be be viewed and edited. All you need to do is create an account and start mapping.</p>
+				<p> The map can also be <a class="Download">downloaded</a> and used offline on Android devices. You'll need to install <a class="OruxMaps">OruxMaps</a> and place the folder "Israel Hiking" with the two files on your SD card under <br>/sdcard/oruxmaps/mapfiles/</p>
 				<H4> Below are some links related to this project </H4>
 				<ul>
-					<li>See <a href="https://github.com/HarelM/maperitive-rulesets/tree/master/IsraelHiking#create-israel-hiking-map-similar-to-israel-trails-committee-itc" target="_blank">Github</a> for files and instructions on how to create the map by yourself</li>
-					<li>See <a href="http://wiki.openstreetmap.org/wiki/WikiProject_Israel" target="_blank">Israel OSM Wiki Project</a> for common rules of the Israeli Open Street Map community</li>
-					<li>See <a href="http://forum.openstreetmap.org/viewforum.php?id=33" target="_blank">Israel OSM Forum</a> for the Israeli Open Street Map forum where you can post questions and look for answers</li>
+					<li>See <a class="Github">Github</a> for files and instructions on how to create the map by yourself</li>
+					<li>See <a class="OSMWiki">Israel OSM Wiki Project</a> for common rules of the Israeli Open Street Map community</li>
+					<li>See <a class="OSMForum">Israel OSM Forum</a> for the Israeli Open Street Map forum where you can post questions and look for answers</li>
 				</ul>
 				<i>
-				<p>
-					Please consider <a href="http://db.tt/iB36k7K" target="_blank">joining Dropbox using this link</a>. Both you and this project will receive a 500Mb free storage bonus.
-				</p>
+				<p> Please consider <a class="JoinDropbox">joining Dropbox using this link</a>. Both you and this project will receive a 500Mb free storage bonus.</p>
 				<p align="right">
 					Thank you for your support!<br>
-					Harel and Zeev
+					Harel and Zeev<br>
+					<button onclick="ChangeLanguage()">עברית</button>
 				</p>
 				</i>
 			</div>
+			<div id="Info-he" class="Info">
+				<H1 id="Header-he">פרוייקט מפת הטיולים הפתוחה של ישראל</H1>
+				<p> המפה הזו נוצרה בעזרת מידע מ- <a class="OSM">Open Street Map</a> שם ניתן לראות ולערוך אותו. כל שיש לעשות הוא לפתוח חשבון ולהתחיל למפות.</p>
+				<p> המפה ניתנת <a class="Download">להורדה</a> ולשימוש בצורה לא מקוונת על מכשירי אנדרואיד. יש להתקין את. <a class="OruxMaps">OruxMaps</a> ולשים את התיקיה "Israel Hiking" עם שני הקבצים שלה על כרטיס הזיכרון בתיקיה <br>/sdcard/oruxmaps/mapfiles/</p>
+				<H4> להלן כמה קישורים הקשורים לפרוייקט </H4>
+				<ul>
+					<li><a class="Github">Github</a> קבצים והוראות איך ליצור את המפה בעצמך</li>
+					<li><a class="OSMWiki">Israel OSM Wiki Project</a> חוקים נפוצים של קהילת הממפים הישראלית של OSM</li>
+					<li><a class="OSMForum">Israel OSM Forum</a> היכן שניתן למצוא תשובות ולשאול שאלות לגבי המיפוי</li>
+				</ul>
+				<i>
+				<p> אנא שקלו <a class="JoinDropbox">להצטרף ל- Dropbox בעזרת הקישור הזה</a>. כך אתם והפרוייקט נזכה לתוספת חינם של 500 מ"ב לאיכסון </p>
+				<p align="left">
+					תודה על תרומתכם!<br>
+					הראל וזאב<br>
+					<button onclick="ChangeLanguage()">English</button>
+				</p>
+				</i>
+			</div>
+			<!-- Need to use 78% instead of 80% for the map's div to overcome an IE bug -->
+			<div id="map" style="float:left;width:78%; height:100%;"></div>
 		</div>
 		<script src="http://cdn.leafletjs.com/leaflet-0.5.1/leaflet.js"></script>
+		<script> 
+			// Links
+			//---------------------------------------------------
+			var links = document.getElementsByClassName('OSM');
+			for (var i = 0; i < links.length; ++i) {
+				links[i].href = "http://www.openstreetmap.org/";
+				links[i].target = "_blank"
+			}
+			links = document.getElementsByClassName('Download');
+			for (var i = 0; i < links.length; ++i) {
+				links[i].href = "https://www.dropbox.com/sh/ujxnhr5zjc94g8h/9Z_DGVRiC2/Israel%20Hiking/oruxmaps%20mapfiles";
+				links[i].target = "_blank"
+			}
+			links = document.getElementsByClassName('OruxMaps');
+			for (var i = 0; i < links.length; ++i) {
+				links[i].href = "https://play.google.com/store/apps/details?id=com.orux.oruxmaps";
+				links[i].target = "_blank"
+			}
+			links = document.getElementsByClassName('Github');
+			for (var i = 0; i < links.length; ++i) {
+				links[i].href = "https://github.com/HarelM/maperitive-rulesets/tree/master/IsraelHiking#create-israel-hiking-map-similar-to-israel-trails-committee-itc";
+				links[i].target = "_blank"
+			}
+			links = document.getElementsByClassName('OSMWiki');
+			for (var i = 0; i < links.length; ++i) {
+				links[i].href = "http://wiki.openstreetmap.org/wiki/WikiProject_Israel";
+				links[i].target = "_blank"
+			}
+			links = document.getElementsByClassName('OSMForum');
+			for (var i = 0; i < links.length; ++i) {
+				links[i].href = "http://forum.openstreetmap.org/viewforum.php?id=33";
+				links[i].target = "_blank"
+			}
+			links = document.getElementsByClassName('JoinDropbox');
+			for (var i = 0; i < links.length; ++i) {
+				links[i].href = "http://db.tt/iB36k7K";
+				links[i].target = "_blank"
+			}
+		</script>
 		<script>
+			// Code
+			// -----------------------------------
+			var container = document.getElementById('container');
+			var mapdiv = document.getElementById('map');
+			var bHebrew = false;
+			
+			function ChangeLanguage()
+			{
+				var info;
+				bHebrew = (bHebrew == false);
+				if (bHebrew == false)
+				{
+					document.getElementById('Info-he').style.display='none';
+					document.getElementById('Info').style.display = "block";
+					info = document.getElementById('Info');
+					info.style.styleFloat = 'left';
+					info.style.cssFloat = 'left';
+					document.dir = 'ltr';
+				}
+				else
+				{
+					document.getElementById('Info').style.display='none';
+					document.getElementById('Info-he').style.display = "block";
+					info = document.getElementById('Info-he');
+					info.style.styleFloat = 'right';
+					info.style.cssFloat = 'right';
+					document.dir = 'rtl';
+				}
+			}
+			
+			ChangeLanguage();
+			
+			var isMobile = (((window.matchMedia) && (window.matchMedia('(max-device-width: 960px)').matches)) || (screen.width <= 960));
+			infos = document.getElementsByClassName('Info');
+			for (var i = 0; i < infos.length; ++i) {
+				if (isMobile == true)
+				{
+					infos[i].style.width = '80%';
+					infos[i].style.styleFloat = 'center';
+					infos[i].style.cssFloat = 'center';
+					infos[i].style.margin.left = '10%';
+					infos[i].style.marginLeft = '10%';
+					infos[i].style.margin.right = '10%';
+					infos[i].style.marginRight = '10%';
+					mapdiv.style.styleFloat = 'center';
+					mapdiv.style.cssFloat = 'center';
+					mapdiv.style.margin.left = '11%';
+					mapdiv.style.marginLeft = '11%';
+					mapdiv.style.margin.right = '11%';
+					mapdiv.style.marginRight = '11%';
+					// couldn't make the following order: header, map, info
+				}
+				else
+				{
+					infos[i].style.width = '20%';
+					infos[i].style.margin.left = '1%';
+					infos[i].style.marginLeft = '1%';
+					infos[i].style.margin.right = '1%';
+					infos[i].style.marginRight = '1%';
+				}
+			}
 			var map = L.map('map').setView([31.3618449995, 34.967935], 8);
 			L.tileLayer('Tiles/{z}/{x}/{y}.png', {
 				attribution: 'Map data &copy; <a href="http://openstreetmap.org" target="_blank">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/" target="_blank">CC-BY-SA</a> <button onclick="onLocateClick()">Show my location</button>',
