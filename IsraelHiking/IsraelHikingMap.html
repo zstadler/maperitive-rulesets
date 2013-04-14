@@ -1,4 +1,4 @@
-﻿<html>
+<html>
 	<head>
 		<meta charset="utf-8" />
 		<title>Israel Hiking Map - OSM</title>
@@ -10,11 +10,11 @@
 		<link rel="icon" href="favicon.ico" />
 	</head>
 	<body style="margin:0; padding:0; height:100%">
-		<div class="container" style="margin:auto;font-family:arial">
-			<div id="Info" class="Info">
+		<div class="container" style="margin:auto;font-family:arial;">
+			<div id="Info" class="Infos">
 				<H1 id="Header">Israel Hiking Project</H1>
 				<p> This map was generated from <a class="OSM">Open Street Map (OSM)</a> data where it can be be viewed and edited. All you need to do is create an account and start mapping.</p>
-				<p> The map can also be <a class="Download">downloaded</a> and used offline on Android devices. You'll need to install <a class="OruxMaps">OruxMaps</a> and place the folder "Israel Hiking" with the two files on your SD card under <br>/sdcard/oruxmaps/mapfiles/</p>
+				<p> The map can also be <a class="Download">downloaded</a> and used offline on Android devices. You'll need to install <a class="OruxMaps">OruxMaps</a> and place the two files on your SD card under <br>/sdcard/oruxmaps/mapfiles/IsraelHiking.</p>
 				<H4> Below are some links related to this project </H4>
 				<ul>
 					<li>See <a class="Github">Github</a> for files and instructions on how to create the map by yourself</li>
@@ -30,7 +30,7 @@
 				</p>
 				</i>
 			</div>
-			<div id="Info-he" class="Info">
+			<div id="Info-he" class="Infos">
 				<H1 id="Header-he">פרוייקט מפת הטיולים הפתוחה של ישראל</H1>
 				<p> המפה הזו נוצרה בעזרת מידע מ- <a class="OSM">Open Street Map</a> שם ניתן לראות ולערוך אותו. כל שיש לעשות הוא לפתוח חשבון ולהתחיל למפות.</p>
 				<p> המפה ניתנת <a class="Download">להורדה</a> ולשימוש בצורה לא מקוונת על מכשירי אנדרואיד. יש להתקין את. <a class="OruxMaps">OruxMaps</a> ולשים את התיקיה "Israel Hiking" עם שני הקבצים שלה על כרטיס הזיכרון בתיקיה <br>/sdcard/oruxmaps/mapfiles/</p>
@@ -56,6 +56,31 @@
 		<script> 
 			// Links
 			//---------------------------------------------------
+			if (typeof document.getElementsByClassName != 'function') {
+				document.getElementsByClassName = function() {
+					var elms = document.getElementsByTagName('*');
+					var ei = new Array();
+					for (i=0;i<elms.length;i++) {
+						if (elms[i].getAttribute('class')) {
+							ecl = elms[i].getAttribute('class').split(' ');
+							for (j=0;j<ecl.length;j++) {
+								if (ecl[j].toLowerCase() == arguments[0].toLowerCase()) {
+									ei.push(elms[i]);
+								}
+							}
+						} else if (elms[i].className) {
+							ecl = elms[i].className.split(' ');
+							for (j=0;j<ecl.length;j++) {
+								if (ecl[j].toLowerCase() == arguments[0].toLowerCase()) {
+									ei.push(elms[i]);
+								}
+							}
+						}
+					}
+					return ei;
+				}
+			}
+			
 			var links = document.getElementsByClassName('OSM');
 			for (var i = 0; i < links.length; ++i) {
 				links[i].href = "http://www.openstreetmap.org/";
@@ -95,6 +120,26 @@
 		<script>
 			// Code
 			// -----------------------------------
+			var map = L.map('map').setView([31.3618449995, 34.967935], 8);
+			L.tileLayer('Tiles/{z}/{x}/{y}.png', {
+				attribution: 'Map data &copy; <a href="http://openstreetmap.org" target="_blank">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/" target="_blank">CC-BY-SA</a> <button onclick="onLocateClick()">Show my location</button>',
+				minZoom : 7,
+				maxZoom: 15
+			}).addTo(map);
+			
+			function onLocationFound(e) {
+				var radius = e.accuracy / 2;
+				L.marker(e.latlng).addTo(map)
+				.bindPopup("You are within " + radius + " meters from this point").openPopup();
+				L.circle(e.latlng, radius).addTo(map);
+			}
+			
+			map.on('locationfound', onLocationFound);
+			
+			function onLocateClick() {
+				map.locate({setView: true, maxZoom: 15});
+			}
+			
 			var container = document.getElementById('container');
 			var mapdiv = document.getElementById('map');
 			var bHebrew = false;
@@ -122,14 +167,14 @@
 					document.dir = 'rtl';
 				}
 			}
-			
 			ChangeLanguage();
 			
 			var isMobile = (((window.matchMedia) && (window.matchMedia('(max-device-width: 960px)').matches)) || (screen.width <= 960));
-			infos = document.getElementsByClassName('Info');
+			var infos = document.getElementsByClassName('Infos');
 			for (var i = 0; i < infos.length; ++i) {
 				if (isMobile == true)
 				{
+					
 					infos[i].style.width = '80%';
 					infos[i].style.styleFloat = 'center';
 					infos[i].style.cssFloat = 'center';
@@ -147,32 +192,13 @@
 				}
 				else
 				{
-					infos[i].style.width = '20%';
+					infos[i].style.width = '18%';
 					infos[i].style.margin.left = '1%';
 					infos[i].style.marginLeft = '1%';
 					infos[i].style.margin.right = '1%';
 					infos[i].style.marginRight = '1%';
 					infos[i].style.fontSize = '14px';
 				}
-			}
-			var map = L.map('map').setView([31.3618449995, 34.967935], 8);
-			L.tileLayer('Tiles/{z}/{x}/{y}.png', {
-				attribution: 'Map data &copy; <a href="http://openstreetmap.org" target="_blank">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/" target="_blank">CC-BY-SA</a> <button onclick="onLocateClick()">Show my location</button>',
-				minZoom : 7,
-				maxZoom: 15
-			}).addTo(map);
-			
-			function onLocationFound(e) {
-				var radius = e.accuracy / 2;
-				L.marker(e.latlng).addTo(map)
-				.bindPopup("You are within " + radius + " meters from this point").openPopup();
-				L.circle(e.latlng, radius).addTo(map);
-			}
-			
-			map.on('locationfound', onLocationFound);
-			
-			function onLocateClick() {
-				map.locate({setView: true, maxZoom: 15});
 			}
 		</script>
 	</body>
