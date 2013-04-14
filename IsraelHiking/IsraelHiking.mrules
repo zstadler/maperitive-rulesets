@@ -9,6 +9,9 @@
 
 // History:
 // --------
+// 2013-04-05: Added picnic, campsite, parking, and coast to coast
+// 2013-03-15: Use ITM Grid Lines
+// 2013-03-02: Added Grid Lines
 // 2013-02-24: Uploaded to GitHub
 // 2013-02-17: Updated by Harel Mazor and Zeev Stadler
 //		- Modify to ITC Style
@@ -21,10 +24,7 @@
 //		- added special rendering for tunnels
 
 // TODO (stuff still missing, will be added soon)
-// parking "Icons\SJJB\png\transport_parking.n.32.png"
-// viewpoint "Icons\SJJB\png\tourist_view_point.p.32.png"
 // archeological "Icons\SJJB\png\tourist_archaeological.p.32.png"
-// picknic "Icons\SJJB\png\tourist_picnic.p.32.png"
 
 
 // drinking water
@@ -52,20 +52,23 @@ features
 		water spring : natural=spring
 		water well : man_made=water_well
 		water cistern : man_made=cistern
+		picnic : @isOneOf(leisure, picnic, picnic_table) OR tourism=picnic_site
+		parking : amenity=parking
+		camp site : tourism=camp_site
+		view : tourism=viewpoint
+		grid label north : grid AND @isMulti(east, 10) AND @isMulti(north, 2)
+		grid label east : grid AND @isMulti(north, 10) AND @isMulti(east, 2)
 
 	lines
 //		aerialway : aerialway
 		contour major : contour[@isMulti(elevation, 100)]
 		contour minor : contour[@isMulti(elevation, 10) and not @isMulti(elevation, 100)]
-		hiking route : relation[type=route route=foot] way[trailblazed=yes]
-//		hiking route major : relation[type=route route=foot @isOneOf(network, iwn, nwn)]
-//		hiking route minor : relation[type=route route=foot @isOneOf(network, rwn, lwn)]
-//		hiking route other : trailblazed=yes
 		hiking regional jesus trail: relation[network = rwn @isMatch(name:en,"Jesus Trail")]
 		hiking regional golan trail: relation[network = rwn @isMatch(name:en1,"Golan Trail")]
 		hiking regional kineret roundabout trail : relation[network = rcn @isMatch(name:en1,"Sea of Galilee Bicycle Route")] 
 		hiking regional jerusalem trail: relation[network = rwn @isMatch(name:en,"Jerusalem Trail")]
 		hiking regional northern galilee trail: relation[network = rwn @isMatch(name:en,"Northern Galilee Regional Trail")]
+		hiking regional coast to coast: relation[network = rwn @isMatch(name:en,"Coast to Coast")]
 		hiking national: relation[network = nwn]
 
 		cycle path : highway=cycleway 
@@ -76,15 +79,14 @@ features
 		road major primary : @isOneOf(highway, primary, primary_link) AND NOT @isOneOf(is_in, Jordan, Egypt, Syria, Lebanon)
 		road major secondary : @isOneOf(highway, secondary, secondary_link) AND NOT @isOneOf(is_in, Jordan, Egypt, Syria, Lebanon)
 		road major tertiary : @isOneOf(highway, tertiary, tertiary_link) AND NOT @isOneOf(is_in, Jordan, Egypt, Syria, Lebanon)
-		road minor : @isOneOf(highway, residential, unclassified, living_street, road) AND NOT @isOneOf(is_in, Jordan, Egypt, Syria, Lebanon)
+		road minor : @isOneOf(highway, residential, unclassified, living_street, service, road) AND NOT @isOneOf(is_in, Jordan, Egypt, Syria, Lebanon)
 		track major : highway=track AND @isOneOf(tracktype, grade1, grade2)
 		track minor : highway=track AND  (@isOneOf(tracktype, grade3, grade4, grade5) OR NOT tracktype) 
 		railway rail : railway=rail
 		power line : @isOneOf(power, line, minor_line)
-		stream : waterway=stream
+		stream : @isOneOf(waterway, stream, river, wadi)
 		boundary country : boundary=administrative AND admin_level=2 AND NOT natural=coastline
-//		boundary province : boundary=administrative AND (admin_level=4 OR admin_level=6)
-//		boundary municipal : boundary=administrative AND admin_level=8
+		grid : grid
 
 	areas
 		building : building=yes
@@ -95,7 +97,7 @@ features
 		military : landuse=military OR military=danger_area
 
 properties
-	curved : true
+	// curved : true
 	text-halo-width : 30%
 	text-halo-opacity : 0.75
 	map-background-color : white
@@ -219,6 +221,34 @@ rules
 			fill-color : blue
 		draw : shape
 
+	target : picnic
+		define
+			min-zoom : 12
+			icon-image : icons/SJJB/png/tourist_picnic.p.32.png
+			icon-width : 14:16;15:24
+		draw : icon
+
+	target : camp site
+		define
+			min-zoom : 12
+			icon-image : icons/SJJB/png/accommodation_camping.p.32.png
+			icon-width : 14:16;15:24
+		draw : icon
+	
+	target : view
+		define
+			min-zoom : 12
+			icon-image : icons/SJJB/png/tourist_view_point.p.32.png
+			icon-width : 14:16;15:24
+		draw : icon
+	
+	target : parking
+		define
+			min-zoom : 15
+			icon-image : icons/SJJB/png/transport_parking.n.32.png
+			icon-width : 16
+		draw : icon
+
 //	target: shelter
 //		define
 //			icon-image : icons/SJJB/png/accommodation_shelter2.n.32.png
@@ -291,33 +321,6 @@ rules
 			line-width : 1
 		draw : line
 
-	target: hiking route*
-		define
-			line-color : red
-			line-opacity : 0.8
-			line-offset : 14:0;15:3;16:5
-			line-offset-sides : left
-		for : network=nwn
-			define
-				min-zoom : 10
-				line-width : 10:1;11:2;15:7
-		else
-			define
-				min-zoom : 12
-				line-width : 11:1;14:2;15:4
-		draw : line
-
-	target: hiking path
-		define
-			min-zoom : 12
-			line-color : red
-			line-opacity : 0.8
-			line-width : 11:1;14:2;15:4
-			line-offset : 14:0;15:3;16:5
-			line-offset-sides : left
-			line-style : dash
-		draw : line
-
 	target : railway rail
 		define
 			min-zoom : 13
@@ -355,25 +358,29 @@ rules
 				min-zoom : 6
 				line-color : blue
 				text-color : blue
-				shape-def : p:blue;pw:3;f:white;m:-9,0;-8,3;l:0,4;l:8,3;l:9,0;l:8,-3;l:0,-4;l:-8,-3;z
+				shape-def : p:white;pw:1.5;f:blue;m:-26,-21;l:-31,-16,-31,16,-26,21,26,21,31,16,31,-16,26,-21,-26,-21;z;pw:0;f:white;m:-26,0;l:-24,12,0,16,24,12,26,0,24,-12,0,-16,-24,-12,-26,0;z
 		elseif : * trunk
 			define
 				min-zoom : 7
 				line-color : red
 				text-color : red
-				shape-def : p:red;pw:3;f:white;m:-9,0;-8,3;l:0,4;l:8,3;l:9,0;l:8,-3;l:0,-4;l:-8,-3;z
+				// X values:	-31, -26, -24,  0, 24, 26, 31
+				// Y values:	-21, -16, -12,  0, 12, 16, 21
+				shape-def    : p:white;pw:1.5;f:red;m:-26,-21;l:-31,-16,-31,16,-26,21,26,21,31,16,31,-16,26,-21,-26,-21;z;pw:0;f:white;m:-26,0;l:-24,12,0,16,24,12,26,0,24,-12,0,-16,-24,-12,-26,0;z
+				// Rounded rectangular corners, as in the line below hit a Maperitive bug
+				// shape-def : p:white;pw:1.5;f:red;m:-26,-21;a:5,5,-31,-16;l:-31,16;a:5,5,-26,21;l:26,21;a:5,5,31,16;l:31,-16;a:5,5,26,-21;l:-26,-21;z;pw:0;f:white;m:-26,0;l:-24,12,0,16,24,12,26,0,24,-12,0,-16,-24,-12,-26,0;z
 		elseif : * primary
 			define
 				min-zoom : 9
 				line-color : green
 				text-color : green
-				shape-def : p:green;pw:3;f:white;m:-9,0;-8,3;l:0,4;l:8,3;l:9,0;l:8,-3;l:0,-4;l:-8,-3;z
+				shape-def : p:white;pw:1.5;f:green;m:-26,-21;l:-31,-16,-31,16,-26,21,26,21,31,16,31,-16,26,-21,-26,-21;z;pw:0;f:white;m:-26,0;l:-24,12,0,16,24,12,26,0,24,-12,0,-16,-24,-12,-26,0;z
 		elseif : * secondary
 			define
 				min-zoom : 10
 				line-color : #8B4513
 				text-color : #8B4513
-				shape-def : p:#8B4513;pw:3;f:white;m:-9,0;-8,3;l:0,4;l:8,3;l:9,0;l:8,-3;l:0,-4;l:-8,-3;z
+				shape-def : p:white;pw:1.5;f:#8B4513;m:-26,-21;l:-31,-16,-31,16,-26,21,26,21,31,16,31,-16,26,-21,-26,-21;z;pw:0;f:white;m:-26,0;l:-24,12,0,16,24,12,26,0,24,-12,0,-16,-24,-12,-26,0;z
 		elseif : * tertiary
 			define
 				min-zoom : 11
@@ -382,17 +389,35 @@ rules
 			define
 				min-zoom : 14
 				line-color : white
+
+		// Colors for Hiking Trail on roads
+		for : colour = red
+			define
+				border-color : red
+		elsefor : colour = blue
+			define
+				border-color : blue
+		elsefor : colour = black
+			define
+				border-color : black
+		elsefor : colour = green
+			define
+				border-color : green
+		else
+			define
+				border-color : black
+				border-opacity : 0.8
+
 		define
 			line-width : 10:0.5;13:2;14:2;16:3
 			border-style : solid
-			border-color : black
 			border-width : 80%
-			border-opacity : 0.8
 		draw : line
 
 // Major Road Sheilds
 // The length in Km is computed by a Python routine
 
+		// default min-zoom is set for safety
 		define
 			min-zoom : 22
 
@@ -405,15 +430,18 @@ rules
 			elsefor : length > 8
 				define
 					min-zoom : 8
-			elsefor : length > 4
+			elsefor : length > 6
 				define
 					min-zoom : 9
-			elsefor : length > 2
+			elsefor : length > 4
 				define
 					min-zoom : 10
-			else
+			elsefor : length > 2
 				define
 					min-zoom : 11
+			else
+				define
+					min-zoom : 12
 		elseif : * trunk
 			for : length > 32
 				define
@@ -424,10 +452,10 @@ rules
 			elsefor : length > 8
 				define
 					min-zoom : 9
-			elsefor : length > 4
+			elsefor : length > 6
 				define
 					min-zoom : 10
-			elsefor : length > 2
+			elsefor : length > 4
 				define
 					min-zoom : 11
 			else
@@ -440,10 +468,10 @@ rules
 			elsefor : length > 8
 				define
 					min-zoom : 10
-			elsefor : length > 4
+			elsefor : length > 6
 				define
 					min-zoom : 11
-			elsefor : length > 2
+			elsefor : length > 4
 				define
 					min-zoom : 12
 			else
@@ -479,8 +507,27 @@ rules
 			shield-resize-mode : free
 		draw : shield
 
+// Street names
+	target : road *
+		if : $regex("(.* motorway)|(.* trunk)|(.* primary)|(.* secondary)")
+			stop
+		define
+			min-zoom : 15
+			font-weight : bold
+			font-family : Verdana
+			text-max-width : 7
+			text-halo-width : 66%
+			text-halo-opacity : 0.66
+			text-align-horizontal : center
+			text-align-vertical : center
+			font-stretch : 0.9
+		for : @isMatch(name, "[א-ת؀-ݭﬠ-ﻼ]")
+			define
+				text-direction : rtl
+		draw : text
 
 	target : road *
+	// Narrow 1px lines at low zoom levels
 		if : * minor
 			define
 				min-zoom : 11
@@ -559,7 +606,7 @@ rules
 	target : *path*
 		// foot paths and cycle paths
 		define
-			line-width : 13:1.5;14:2
+			line-width : 12:1;13:1.5;14:2
 			line-style : dash
 			min-zoom : 13
 		for : colour = red
@@ -592,7 +639,7 @@ rules
 		if : * jerusalem trail
 			define
 				line-color : blue
-		elseif : *golan trail
+		elseif : * golan trail
 			define
 				line-color : blue
 		elseif : * jesus trail 
@@ -601,9 +648,12 @@ rules
 		elseif : * kineret roundabout trail
 			define
 				line-color : purple
-		elseif : *northern galilee trail
+		elseif : * northern galilee trail
 			define
 				line-color : purple
+		elseif : * coast to coast
+			define
+				line-color : yellow
 		else
 			stop
 		draw : line
@@ -619,7 +669,7 @@ rules
 		if : * jerusalem trail
 			define
 				line-color : yellow
-		elseif : *golan trail
+		elseif : * golan trail
 			define
 				line-color : green
 		elseif : * jesus trail 
@@ -628,7 +678,10 @@ rules
 		elseif : * kineret roundabout trail
 			define
 				line-color : white black 10%
-		elseif : *northern galilee trail
+		elseif : * northern galilee trail
+			define
+				line-color : white black 10%
+		elseif : * coast to coast
 			define
 				line-color : white black 10%
 		else
@@ -664,42 +717,22 @@ rules
 		define
 			min-zoom : 13
 			line-color : #78C1C1
-			line-width : 13:1;14:2;16:3
-		draw : line
-		define
-			min-zoom : 15
-			font-size : 15:10;17:17
-			font-style : italic
-			font-weight : bold
-			text-color : #78C1C1 black 10%
-			map.rendering.lflp.min-buffer-space : 5
-			map.rendering.lflp.max-allowed-corner-angle : 90
-		draw : text
-
-	target: contour*
-		define
-			line-color : #7f3300
-			line-opacity : 0.6
-			curved : true
-		if : *major
+			line-width : 10:1;15:3
+		for : waterway = wadi
 			define
-				map.rendering.contour.label : true
-				min-zoom : 12
-
-	target : stream
+				line-style : dash
+		draw : line
 		define
 			min-zoom : 13
-			line-color : #78C1C1
-			line-width : 13:1;14:2;16:3
-		draw : line
-		define
-			min-zoom : 15
-			font-size : 15:10;17:17
+			font-size : 13:8;5:10;17:17
 			font-style : italic
 			font-weight : bold
 			text-color : #78C1C1 black 10%
 			map.rendering.lflp.min-buffer-space : 5
 			map.rendering.lflp.max-allowed-corner-angle : 90
+		for : @isMatch(name, "[א-ת؀-ݭﬠ-ﻼ]")
+			define
+				text-direction : rtl
 		draw : text
 
 	target: contour*
@@ -723,6 +756,42 @@ rules
 				min-zoom : 13
 				line-width : 0.65
 		draw : contour
+
+	target : grid label *
+		if : grid label north
+			define
+				text : north
+				text-align-horizontal : near
+				text-offset-horizontal : 120%
+		elseif : grid label east
+			define
+				text : east
+				text-align-vertical : far
+				text-offset-vertical : -120%
+		define
+			font-size : 14
+			min-zoom : 13
+			text-opacity : 80%
+		draw : text
+
+	target : grid
+		define
+			line-width : 11:0.5;12:2
+		for : @isMulti(name, 20)
+			define
+				min-zoom : 8
+		elsefor : @isMulti(name, 10)
+			define
+				min-zoom : 9
+		else
+			define
+				min-zoom : 12
+				line-width : 0.5
+		define
+			line-color : black
+			curved : true
+			line-opacity : 80%
+		draw : line
 
 // areas
 
@@ -766,12 +835,15 @@ rules
 			line-opacity : 0.75
 		if : boundary country
 			for : @isMatch(name, "1949 .*$")
+				// 1949 armistice line - "The Green Line"
 				define
 					line-color : green
 			elsefor : note = "UN Resolution 497, UNDOF"
+				// Israel-Syria Agreement on Disengagement Line A "Alpha"
 				define
 					line-color : blue
 			elsefor : note = "UNDOF line Bravo"
+				// Israel-Syria Agreement on Disengagement Line B "Bravo" 
 				define
 					line-color : red
 			elsefor : note = "DMZ"
@@ -783,16 +855,6 @@ rules
 				line-width : 6:1;9:3;10:6
 //				text : @any([[name:he]], [[name:en]], name)
 //			draw : text
-		elseif : boundary province
-			define
-				min-zoom : 19
-				line-width : 4:1;11:3
-				line-style : dash
-		elseif : boundary municipal
-			define
-				min-zoom : 12
-				line-width : 12:1;14:2
-				line-style : dash
 		draw : line		
 
 	target : water
